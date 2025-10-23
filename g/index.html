@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Карточки заявок</title>
+  <style>
+    :root {
+      --base-font-size: 1rem; /* 10px */
+      --gap-sm: 0.5rem;
+      --gap-md: 1rem;
+      --gap-lg: 2rem;
+      --card-padding: 1rem;
+      --card-border-radius: 0.8rem;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      --color-bg: #f9f9f9;
+      --color-card-bg: #ffffff;
+      --color-border: #ddd;
+      --color-text: #333;
+      --color-checkbox-bg: #fff;
+      --color-checkbox-check: #007bff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-size: var(--base-font-size);
+      font-family: var(--font-family);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    .cards-container {
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      padding: var(--gap-md);
+      height: 100vh;
+    }
+
+    @media (min-width: 768px) {
+      .cards-container {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+      }
+    }
+
+    .card {
+      background-color: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+      padding: var(--card-padding);
+      margin-bottom: var(--gap-md);
+      min-width: 300px;
+      max-width: 400px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-sm);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      scroll-snap-align: start;
+      height: auto;
+    }
+
+    .card-title {
+      font-weight: bold;
+      font-size: 1.4rem;
+      margin-bottom: var(--gap-sm);
+    }
+
+    .card-field {
+      display: flex;
+      flex-direction: column;
+      font-size: 1.2rem;
+    }
+
+    .card-field span:first-child {
+      opacity: 0.7;
+    }
+
+    .tasks-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: var(--gap-sm);
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .custom-checkbox {
+      position: relative;
+      width: 1.4rem;
+      height: 1.4rem;
+      cursor: pointer;
+      border: 2px solid #ccc;
+      border-radius: 0.2rem;
+      background-color: var(--color-checkbox-bg);
+      transition: border-color 0.2s ease;
+    }
+
+    .custom-checkbox::after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 0.4rem;
+      top: 0.1rem;
+      width: 0.4rem;
+      height: 0.8rem;
+      border: solid var(--color-checkbox-check);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    input[type="checkbox"]:checked ~ .custom-checkbox::after {
+      display: block;
+    }
+
+    .role {
+      font-size: 1.1rem;
+      color: #777;
+      margin-top: var(--gap-sm);
+    }
+  </style>
+</head>
+<body>
+
+<div class="cards-container">
+
+  <!-- Пример карточки -->
+  <div class="card">
+    <div class="card-title">Заявка №1</div>
+    
+    <div class="card-field">
+      <span>Адрес объекта:</span>
+      <span>ул. Ленина, д. 10, кв. 5</span>
+    </div>
+
+    <div class="card-field">
+      <span>Контакт заказчика:</span>
+      <span>Иван Петров, +7 (999) 123-45-67</span>
+    </div>
+
+    <div class="card-field">
+      <span>Контакт исполнителя:</span>
+      <span>Сергей Смирнов, +7 (987) 654-32-10</span>
+    </div>
+
+    <div class="card-field">
+      <span>Дата:</span>
+      <span>15.04.2025</span>
+    </div>
+
+    <div class="card-field">
+      <span>Время:</span>
+      <span>10:00 - 12:00</span>
+    </div>
+
+    <div class="card-field">
+      <span>Сумма ₽:</span>
+      <span>5 000 ₽</span>
+    </div>
+
+    <div class="card-field">
+      <span>Задачи:</span>
+      <ul class="tasks-list">
+        <li class="task-item">
+          <input type="checkbox" id="task1-1">
+          <label for="task1-1" class="custom-checkbox"></label>
+          <span>Проверить систему отопления</span>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" id="task1-2">
+          <label for="task1-2" class="custom-checkbox"></label>
+          <span>Установить фильтры</span>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" id="task1-3">
+          <label for="task1-3" class="custom-checkbox"></label>
+          <span>Осмотреть трубопровод</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="role">
+      Роль/Должность: Мастер по ремонту
+    </div>
+  </div>
+
+  <!-- Вторая карточка -->
+  <div class="card">
+    <div class="card-title">Заявка №2</div>
+    <div class="card-field">
+      <span>Адрес объекта:</span>
+      <span>ул. Пушкина, д. 5</span>
+    </div>
+    <div class="card-field">
+      <span>Контакт заказчика:</span>
+      <span>Мария Сидорова, +7 (900) 111-22-33</span>
+    </div>
+    <div class="card-field">
+      <span>Контакт исполнителя:</span>
+      <span>Андрей Кузнецов, +7 (900) 222-33-44</span>
+    </div>
+    <div class="card-field">
+      <span>Дата:</span>
+      <span>16.04.2025</span>
+    </div>
+    <div class="card-field">
+      <span>Время:</span>
+      <span>14:00 - 16:00</span>
+    </div>
+    <div class="card-field">
+      <span>Сумма ₽:</span>
+      <span>3 500 ₽</span>
+    </div>
+    <div class="card-field">
+      <span>Задачи:</span>
+      <ul class="tasks-list">
+        <li class="task-item">
+          <input type="checkbox" id="task2-1">
+          <label for="task2-1" class="custom-checkbox"></label>
+          <span>Проверить электропроводку</span>
+        </li>
+        <li class="task-item">
+          <input type="checkbox" id="task2-2">
+          <label for="task2-2" class="custom-checkbox"></label>
+          <span>Заменить розетки</span>
+        </li>
+      </ul>
+    </div>
+    <div class="role">
+      Роль/Должность: Электрик
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
